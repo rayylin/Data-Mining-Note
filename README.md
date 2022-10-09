@@ -157,16 +157,16 @@ Chapter 5: Linear Regression and Model Assessment
 
         Ordinary Least Squares
 
-        ![image](https://user-images.githubusercontent.com/58899897/194751405-043a3e1c-2528-4b42-ab8f-84dbf0dc08d4.png)
+![image](https://user-images.githubusercontent.com/58899897/194751405-043a3e1c-2528-4b42-ab8f-84dbf0dc08d4.png)
 
-        ![image](https://user-images.githubusercontent.com/58899897/194773912-8c4be219-8c8a-45e9-a60f-f82f12f79165.png)
+![image](https://user-images.githubusercontent.com/58899897/194773912-8c4be219-8c8a-45e9-a60f-f82f12f79165.png)
 
         Why is it contradict with simple linear regression (Fit “sales” using only “newspaper” as predictor)?
         Correlation between radio and newspaper
         Confounding effect: the effects of the exposure under study on a given outcome are mixed in with the effects of an additional factor (or set of factors) resulting in a distortion of the true relationship.
         Confounder: a variable influences both dependent variables.
 
-        ![image](https://user-images.githubusercontent.com/58899897/194774175-79988d2d-7fb8-436d-abf9-62e2db1c37e8.png)
+![image](https://user-images.githubusercontent.com/58899897/194774175-79988d2d-7fb8-436d-abf9-62e2db1c37e8.png)
 
         The coefficient 6 of TV*radio indicates the existence of synergy e↵ect: spending money on radio advertising actually increases the e↵ectiveness of TV advertising.
 
@@ -203,7 +203,7 @@ Chapter 5: Linear Regression and Model Assessment
                 doesn’t require the estimation to be likelihood-based or error         to be Gaussian
                 doesn’t need to compute degrees of freedom
 
-        ![image](https://user-images.githubusercontent.com/58899897/194776456-2eee8000-9fb3-4ad2-8e2e-dc3f10597415.png)
+![image](https://user-images.githubusercontent.com/58899897/194776456-2eee8000-9fb3-4ad2-8e2e-dc3f10597415.png)
 
         Cross-validation
         In data insu
@@ -218,9 +218,52 @@ Chapter 5: Linear Regression and Model Assessment
 
 Chapter 6 Subset Selection, Lasso, Adaptive Lasso
 
-Why consider alternatives to least squares?
-Prediction Accuracy: control the variance to reduce the mean square error (MSE). The least squares will fail when p > n.
-Model Interpretability: By removing irrelevant features, i.e., by setting the corresponding coefficient estimates to zero, we can obtain a more interpretable model. We will present some approaches for automatically performing variable selection.
+        Why consider alternatives to least squares?
+        Prediction Accuracy: control the variance to reduce the mean square error (MSE). The least squares will fail when p > n.
+        Model Interpretability: By removing irrelevant features, i.e., by setting the corresponding coefficient estimates to zero, we can obtain a more interpretable model. We will present some approaches for automatically performing variable selection.
 
-Subst selection
+        Subst selection
+        Examining all possible models is infeasible, as there are 2p possible models.
+
+        Forward selection: Begin with the null model - a model that contains an intercept but no predictors. Fit p simple linear regressions and add to the null model the variable that optimizes a selection criterion (e.g., lowest residual sum of squares (RSS)). In addition to it, add another variable that optimizes the
+        selection criterion amongst all two-variable models. Continue until some stopping rule is satisfied, e.g., when all remaining variables have a p-value above some threshold. Drawback: each addition of a new variable may render one or more of the already included variables non-significant.
+
+        Backward selection
+        Start with all variables in the model. Remove the variable with the largest p-value - that is, the variable that is the least statistically significant.
+        Continue until a stopping rule is reached. For instance, we may stop when all remaining variables have a significant p-value defined by some significance threshold. Drawback: sometimes variables are dropped that would be significant when added to the final reduced models.
+
+        Shrinkage Methods: Lasso, Adaptive Lasso
+        As an alternative, we can fit a model containing all p predictors using a technique that regularizes the coefficient estimates, or equivalently, that shrinks the coefficient estimates towards zero.
+
+![image](https://user-images.githubusercontent.com/58899897/194777609-419ae755-af23-4723-a22d-9e9bf76377f5.png)
+
+        As with least squares, lasso seeks coefficient estimates that fit the data well, by making the RSS small.
+        However, the penalty term is small when (B1...Bp) are close to zero, and so it has the e↵ect of shrinking the estimates of Bj towards zero.
+
+        Lambda is a tuning parameter and controls the balance of RSS and penalty. Lambda = 0 gives least squares estimator. if lambda -> infinite, thenB-Lasso -> 0
+        Lasso forces some of the coefficient estimates to be exactly equal to zero when lambda is suffyciently large and hence lasso performs variable selection.
+
+        Why can Lasso improve prediction accuracy?
+        OLS estimator is unbiased, E(BˆOLS ) = B*(true parameter).
+        B-lasso is a biased estimator, i.e., E(Bˆlasso) != B* if lambda != 0.
+        But, Bˆlasso typically has a smaller prediction error than OLS.
+
+        Bias-variance tradeo↵: When bias is low, variance will be high and vice-versa. A good model balances these two.
+
+![image](https://user-images.githubusercontent.com/58899897/194777984-1d1810c8-109c-4038-a181-82904ff1d4ea.png)
+
+        Adaptive Lasso
+        To reduce the bias in the lasso estimator, adaptive lasso imposes different penalties on the predictors
+
+![image](https://user-images.githubusercontent.com/58899897/194778203-28ee8809-2284-4217-b0ef-abfc67cd8b2e.png)
+
+        Larger BjOLS, less penalization, as larger Bj means more important
+        Pros and Cons of Lasso, adaptive
+        + : avoid overfitting of OLS: bias-variance tradeo↵s
+        + : can handle p > n case
+        + : has variable selection e↵ect
+        -: no closed-form solution
+
+CLogistic 7 Regression and Model Assessment in Classification:
+
 
