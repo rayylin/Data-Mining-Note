@@ -91,6 +91,8 @@ How to do with continous number? Binning e.g.: 5bins
 
         p-value is a statistical measurement used to validate a hypothesis against observed data. A p-value measures the probability of obtaining the observed results, assuming that the null hypothesis is true. The lower the p-value, the greater the statistical significance of the observed difference.
         A p-value measures the probability of obtaining the observed results, assuming that the null hypothesis is true.
+        
+        p值是基於數據的檢定統計量算出來的機率值。如果p值是5%，也就是說，如果以此為界拒絕虛無假說的話，那麼只有5%的可能性犯錯。虛無假說是對的，但卻拒絕了，這是錯誤的。所以說p值越大，拒絕虛無假說的理由越不充分。如果p值接近於0，拒絕虛無假說，那麼幾乎不可能犯錯，於是說明數據是極其不符合虛無假說。
 
 # Chapter 4 Data Preprocessing
 
@@ -142,6 +144,83 @@ How to do with continous number? Binning e.g.: 5bins
         BinningL Bucket, Optimal binning
         Best Power Transformations(Try all and select best R^2):Maximize normality, Maximize correlation with target
 
+Chapter 5: Linear Regression and Model Assessment
 
+        Multiple linear regression
+        X is predictor, and Y is response.
 
+                     p
+        Yi = B0 + (sigma Bj Xij)+ e  
+                    j=1
+        e.g.: sales = B0 +B1*TV + B2* radio + B3*newspaper + e
+        The matrix form of multiple linear regression y = X*B +e
+
+        Ordinary Least Squares
+
+        ![image](https://user-images.githubusercontent.com/58899897/194751405-043a3e1c-2528-4b42-ab8f-84dbf0dc08d4.png)
+
+        ![image](https://user-images.githubusercontent.com/58899897/194773912-8c4be219-8c8a-45e9-a60f-f82f12f79165.png)
+
+        Why is it contradict with simple linear regression (Fit “sales” using only “newspaper” as predictor)?
+        Correlation between radio and newspaper
+        Confounding effect: the effects of the exposure under study on a given outcome are mixed in with the effects of an additional factor (or set of factors) resulting in a distortion of the true relationship.
+        Confounder: a variable influences both dependent variables.
+
+        ![image](https://user-images.githubusercontent.com/58899897/194774175-79988d2d-7fb8-436d-abf9-62e2db1c37e8.png)
+
+        The coefficient 6 of TV*radio indicates the existence of synergy e↵ect: spending money on radio advertising actually increases the e↵ectiveness of TV advertising.
+
+        Model assessment
+        R Square: (TSS-RSS)/TSS = 1 - RSS/TSS
+        RSS (Residual Sum Square): Sigma (Yi - Yi-hat)^2
+        TSS (Total Sum Square): Sigma (Yi - Y-bar)^2
+        R^2 measures the proportion of variability in y that can be explained using x.
+        R^2 is always non-decreasing (RSS is non-increasing) as the number of variables in the model increases.
+        The adjusted R2
+        Adjusted R^2 = 1 - (RSS/(n-d-1)) / (TSS/(n-1))
+        Nn is the number of observations in your data sample.
+        d is the number of independent regressors, i.e. the number of variables in your model, excluding the constant.
+
+        The AIC (Akaike information criterion) is defined for models fit by maximum likelihood
+        AIC = 2 ln(L) + 2*d
+        AIC = n*ln(RSS/n) + 2*d (in Normal case)
+        where L is the maximized likelihood function for the estimated model, d is the total number of parameters used.
+
+        The Schwarz’s Bayesian Criterion SBC, aka, BIC
+        SBC = 2 ln(L) + ln(n)*d
+        SBC = n ln(RSS/n) + ln(n)*d (in Normal case)
+
+        SBC places a heavier penalty on models with many variables, and hence results in the selection of smaller models than AIC
+        Selection rule: select the model with smallest AIC, SBC (BIC), or largest adjusted R2.
+
+        Test Error
+        Ideally, the optimal model should have the smallest test error. Test error is not available in practice! Need to estimate it!
+        The RSS is a training error, computed on the training data. A model with zero training error typically is overfitting.
+
+        We can estimate the test error, using either a validation set approach or a cross-validation approach.
+        This procedure has advantages relative to AIC, BIC, and adjusted R2:
+                provide a direct estimate of the test error
+                doesn’t require the estimation to be likelihood-based or error         to be Gaussian
+                doesn’t need to compute degrees of freedom
+
+        ![image](https://user-images.githubusercontent.com/58899897/194776456-2eee8000-9fb3-4ad2-8e2e-dc3f10597415.png)
+
+        Cross-validation
+        In data insu
+
+        cient situation, we can use cross-validation for both model selection and test error estimation
+        1.Randomly split the training data into K roughly equal parts
+        2.For each k = 1, ...,K
+                a. fit the model using the other K-1 parts of the data.
+                b. calculate prediction error of the fitted model in 2a on the kth part of the data.
+        3.The averaged error over K prediction errors is the cross-validation error.
+        In regression, the prediction error is the mean squared error (MSE). (1/n) * (sigma (yi - y-hat)^2)
+
+Chapter 6 Subset Selection, Lasso, Adaptive Lasso
+
+Why consider alternatives to least squares?
+Prediction Accuracy: control the variance to reduce the mean square error (MSE). The least squares will fail when p > n.
+Model Interpretability: By removing irrelevant features, i.e., by setting the corresponding coefficient estimates to zero, we can obtain a more interpretable model. We will present some approaches for automatically performing variable selection.
+
+Subst selection
 
