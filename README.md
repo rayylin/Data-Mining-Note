@@ -266,4 +266,23 @@ Chapter 6 Subset Selection, Lasso, Adaptive Lasso
 
 CLogistic 7 Regression and Model Assessment in Classification:
 
+Logistic regression: one-dimension
+
+![image](https://user-images.githubusercontent.com/58899897/194779858-38550fea-dbb5-40af-af5e-891875612360.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194779884-5c30603a-3752-45b8-9b1e-fabb3484be32.png)
+
+Input Coding: (class predictors)
+Deviation: constrains the parameters for all levels to sum to zero. Male = 1; Female = -1.
+GLM: use dummy variable. Male = 1; Female = 0.
+
+![image](https://user-images.githubusercontent.com/58899897/194782046-4c5dbaca-0846-4b3a-8d02-793887e00fa3.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194782053-51f983af-ef7b-4453-8b6f-9609d84dac75.png)
+
+
+
+
+
+
 
