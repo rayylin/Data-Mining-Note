@@ -249,6 +249,8 @@ Chapter 6 Subset Selection, Lasso, Adaptive Lasso
         But, Bˆlasso typically has a smaller prediction error than OLS.
 
         Bias-variance tradeo↵: When bias is low, variance will be high and vice-versa. A good model balances these two.
+        The bias error is an error from erroneous assumptions in the learning algorithm. High bias can cause an algorithm to miss the relevant relations               between features and target outputs (underfitting).
+        The variance is an error from sensitivity to small fluctuations in the training set. High variance may result from an algorithm modeling the random           noise in the training data (overfitting).
 
 ![image](https://user-images.githubusercontent.com/58899897/194777984-1d1810c8-109c-4038-a181-82904ff1d4ea.png)
 
@@ -266,23 +268,92 @@ Chapter 6 Subset Selection, Lasso, Adaptive Lasso
 
 CLogistic 7 Regression and Model Assessment in Classification:
 
-Logistic regression: one-dimension
+        Logistic regression: one-dimension
 
 ![image](https://user-images.githubusercontent.com/58899897/194779858-38550fea-dbb5-40af-af5e-891875612360.png)
 
 ![image](https://user-images.githubusercontent.com/58899897/194779884-5c30603a-3752-45b8-9b1e-fabb3484be32.png)
 
-Input Coding: (class predictors)
-Deviation: constrains the parameters for all levels to sum to zero. Male = 1; Female = -1.
-GLM: use dummy variable. Male = 1; Female = 0.
+        Input Coding: (class predictors)
+        Deviation: constrains the parameters for all levels to sum to zero. Male = 1; Female = -1.
+        GLM: use dummy variable. Male = 1; Female = 0.
 
 ![image](https://user-images.githubusercontent.com/58899897/194782046-4c5dbaca-0846-4b3a-8d02-793887e00fa3.png)
 
 ![image](https://user-images.githubusercontent.com/58899897/194782053-51f983af-ef7b-4453-8b6f-9609d84dac75.png)
 
+![image](https://user-images.githubusercontent.com/58899897/194782097-29b97c27-6bf3-435b-a6d1-46e90bf1150d.png)
+
+        Model assessment criterions for classification
+        Misclassification rate, false negative, false positive
+        Receiver operating characteristic (ROC) curve, AUC
+
+        Misclassification rate
+
+![image](https://user-images.githubusercontent.com/58899897/194782228-1c1f01a0-5bc0-4777-b286-89490866159a.png)
+
+        Misclassification rate = 2.28 % +0.4 % = 2.68 %.
+        False positive: The number of negative (No) examples that are classified as positive (Yes) = 40.
+        False negative: The number of positive (Yes) examples that are classified as negative (No) = 228.
+        False positive rate (FPR): The fraction of negative examples that are classified as positive = 40/9667 = 0.4138%
+        False negative rate (FNR): The fraction of positive examples that are classified as negative = 228/333 = 68.4685%
+
+        By default, logistic regression classifies a sample to class Yes if  Pb(default = Yes|balance,student, income) >= 0.5
+
+![image](https://user-images.githubusercontent.com/58899897/194782379-9c63b630-151d-45a0-a354-5e4660ec51c2.png)
+
+        When threshold = 0.2, FPR increases, FNR decreases, overall misclassification error increases, but the credit card company
+        may consider this to be small price to pay for more accurate identification of customers who default!
+
+        ROC & AUC
+
+![image](https://user-images.githubusercontent.com/58899897/194782418-6e211b82-4261-4edb-b8b6-3066bf7d494d.png)
+        The ROC plot displays both TPR (TPR = 1-FNR) and FPR simultaneously, summarized over all possible thresholds
+        Sometimes we use the area under the curve (AUC) to summarize the overall performance. Higher AUC is better.
 
 
+Chapter 8: Decision Tree
+
+        Regression Tree
+
+        Box Regions:
+        Decision tree divides the predictor space, i.e., the set of possible values for X1,..., Xp, into J distinct and
+        non-overlapping regions R1,..., RJ . It considers the shape of each Rj to be rectangles, or boxes.
+
+        How to build a regression tree
+
+![image](https://user-images.githubusercontent.com/58899897/194782706-a7d563c9-7d1d-40c3-a9e5-5740a4854c68.png)
+
+        Recursive binary splitting: a top-down, greedy approach. The approach is top-down because it begins at the top of the
+        tree and then successively splits the predictor space; each split is indicated via two new branches further down on the tree.
+        It is greedy because at each step of the tree-building process, the best split is made at that particular step.
+
+        We first select the predictor Xj and the cut point c such that splitting the predictor space into the regions {x |Xj < c} and
+        {x |Xj c} leads to the greatest reduction in RSS (variance). Next, we repeat the process, looking for the best predictor
+        and best cut point in order to split the data further so as to minimize the RSS within each of the child nodes,
+        Again, we look to split one of these three regions further, so  as to minimize the RSS. The process continues until a stopping criterion is reached;
+        Prediction: We predict the response for a given test  observation using the mean of the training observations in the region to which that test observation belongs.
 
 
+        Classification Tree
+        For a classification tree, we predict that each observation belongs to the most commonly occurring class of training observations in the region to which it belongs. RSS cannot be used as a criterion, as the variables are classes, rather than numbers.
 
+        Gini index and entropy
 
+![image](https://user-images.githubusercontent.com/58899897/194783307-6b0b7784-19e2-4e54-9585-0562ee4d45ee.png)
+
+        The Gini index is small if all ˆpmk are close to zero or one.
+        The Gini index is also referred to as a measure of node purity, that is, a small value indicates that a node contains mostly observations from a single class.
+
+![image](https://user-images.githubusercontent.com/58899897/194783371-cbdb0053-7fd2-4db4-b932-d70049b68854.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194783387-2e60fabb-ada8-4221-b0c4-2bc5933ca8f1.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194783402-13fb3a71-e6e5-43e8-bd9d-91a9afc0f2b6.png)
+
+        Pros and Cons of trees
+        + Trees can be displayed graphically and are very easy to explain to non-technical people.
+        + Trees can easily handle nominal predictors without the need to create dummy variables.
+        + Trees can easily handle missing values.
+        = However, trees generally do not have same level of predictive accuracy as some of other supervised learning methods.
+        - Trees are very unstable: small variations in the data might result in a completely di↵erent tree being generated.
