@@ -357,3 +357,98 @@ Chapter 8: Decision Tree
         + Trees can easily handle missing values.
         = However, trees generally do not have same level of predictive accuracy as some of other supervised learning methods.
         - Trees are very unstable: small variations in the data might result in a completely di↵erent tree being generated.
+        
+Chapter 9 Bagging, Random Forest, Boosting
+
+        Bagging and Random Forest
+        Bootstrap aggregation, or bagging, is a general-purpose procedure for reducing the variance of a data mining method.
+![image](https://user-images.githubusercontent.com/58899897/194785245-639e818b-3e77-4c9c-b9e4-514d4522e88e.png)
+
+        Bootstrap is to obtain distinct data sets by repeatedly sampling observations from the original data set with replacement.
+
+        Bagging
+![image](https://user-images.githubusercontent.com/58899897/194785334-5b4e62fd-a71b-4f11-a18b-5dcb3b822c1e.png)
+
+        For classification trees: for each test observation x, we record the class predicted by each of the B trees, and take a majority vote: the overall prediction is the most commonly occurring class among the B predictions.
+
+        In each bootstrapped set, observations from original training data that are not used for model fitting are out-of-bag samples. The out-of-bag error estimates the test error.
+
+        Ramdom forests
+        Random forests provide an improvement over bagged trees by  way of a small tweak that decorrelates the trees. This further reduces the variance when we average the trees. 
+        As in bagging, we build a number of decision trees on bootstrapped training samples.
+        Key: Decorelated. The price it has to pay is the increment of bias, which, fortunately, is usually small.
+
+![image](https://user-images.githubusercontent.com/58899897/194785596-37c494b7-e57d-4382-95f8-bcdadcd05ff2.png)
+
+        variable importance measure: OOB: Absolute Error or Valid: Absolute Error 
+        The variables are important when their variable importance measure is positive.
+
+        Boosting
+        In Boosting, trees are grown sequentially: each tree is grown using information from previously grown trees.
+
+        Unlike fitting a single large decision tree to the data, which amounts to fitting the data hard and potentially overfitting,
+        the boosting approach instead learns slowly.
+        Given the current model, we fit a decision tree to the residuals from the model. We then add this new decision tree into the
+        fitted function in order to update the residuals. 
+        Each of these trees can be rather small, with just a few terminal nodes, determined by tree depth in the algorithm.
+        By fitting small trees to the residuals, we slowly improve prediction in areas where it does not perform well.
+
+![image](https://user-images.githubusercontent.com/58899897/194785746-522a2d67-6058-419e-8b02-e3a62c6532aa.png)
+
+        The shrinkage parameter slows the process down even further, allowing more and di↵erent shaped trees to attack the residuals.
+        The smaller, the slower
+
+![image](https://user-images.githubusercontent.com/58899897/194785826-2d439d5b-bde1-4d0a-9e90-6a4502df3bb3.png)
+
+Chapter 10 Neural Networks:
+
+![image](https://user-images.githubusercontent.com/58899897/194785925-988e2619-1134-4286-b4f4-2f68bbf358ad.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194785944-3f2cfc81-3a15-492c-8fb4-10128b3662ad.png)
+
+Same layer, same activation and combination function.
+
+![image](https://user-images.githubusercontent.com/58899897/194785994-a5db2f7b-335b-45da-8781-50f294069421.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194786023-91b80223-5e02-43ac-8cb8-faf30a081360.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194786039-7547bd6e-37f6-4739-8eb9-4b139dddf649.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194786114-a5a14780-6db1-41d7-b453-345256bd607d.png)
+
+Chapter 11 K-means Clustering (Unsupervised learning)
+
+![image](https://user-images.githubusercontent.com/58899897/194786503-13eeea83-f289-41ab-9749-b2ca8f104947.png)
+
+For categorical variable: Use dummy
+
+![image](https://user-images.githubusercontent.com/58899897/194786572-47af6147-b5f8-4b50-af24-50d7654ef12b.png)
+
+Within Cluster Variation (WCV). We aim to minimize WCV
+
+Steps of K-means
+1. Initialization: randomly assign a number to each of the observations. These serve as initial cluster assignments.
+2a For each of the K clusters, compute the cluster center ck as the sample mean of observations in the kth cluster.
+2b Assign each observation to the cluster whose center is closest in Euclidean distance.
+Iterate Step 2a&2b until cluster assignments stop changing.
+
+Convergence: when the center is not moving or assignment does not change
+
+![image](https://user-images.githubusercontent.com/58899897/194788198-9cb7f401-64a7-4783-af06-47a3a212ba49.png)
+
+sensitive to initial points. in practice, we can assign different initial situations. choose the one with the smallest wcv
+
+Kmeans uses multiple random initializations, and choose the one having smallest objective function value.
+Any polynomial-time algorithm with global optimization
+
+![image](https://user-images.githubusercontent.com/58899897/194788894-14b2f5d1-bd4a-408a-a0d8-85439fe7a2c3.png)
+
+![image](https://user-images.githubusercontent.com/58899897/194788928-94ddb634-b559-4612-aa28-67f0fd42af43.png)
+
+WCV -> 0 when increase K, as each point becomes a cluster.
+
+Advantage and drawbacks of K-means Interview question!
++ Low memory usage
++ Fast algorithm
+- Sensitive to random initialization
+- Number of clusters is pre-defined
